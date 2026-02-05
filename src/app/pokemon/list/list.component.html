@@ -1,0 +1,7 @@
+<p>list works!</p>
+
+<ul>
+  @for (pokemon of pokemons$ | async; track pokemon.name) {
+    <li>{{ pokemon.name }} - {{ pokemon.favorite }}</li>
+  }
+</ul>
