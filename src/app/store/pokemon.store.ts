@@ -10,6 +10,7 @@ interface PokemonState {
   isLoading: boolean;
   selectedPokemon: PokemonDetail | null;
   searchValue: string;
+  favoriteFilter: boolean;
 }
 
 const initialState: PokemonState = {
@@ -17,6 +18,7 @@ const initialState: PokemonState = {
   isLoading: false,
   selectedPokemon: null,
   searchValue: '',
+  favoriteFilter: false,
 };
 
 export const PokemonStore = signalStore(
@@ -24,11 +26,15 @@ export const PokemonStore = signalStore(
   withComputed((store) => ({
     filteredPokemons: computed(() => {
       const searchValue = store.searchValue().toLowerCase();
+      const favoriteFilter = store.favoriteFilter();
       const pokemons = store.pokemons();
 
-      if (searchValue === '') return pokemons;
+      if (searchValue === '' && favoriteFilter === false) return pokemons;
 
-      return pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(searchValue));
+      return pokemons.filter(
+        (pokemon) =>
+          pokemon.name.toLowerCase().includes(searchValue) && pokemon.favorite === favoriteFilter,
+      );
     }),
   })),
   withMethods((store, pokemonService = inject(PokemonApiService)) => ({
@@ -67,6 +73,7 @@ export const PokemonStore = signalStore(
       ),
     ),
     changeSearchValue: (searchValue: string) => patchState(store, { searchValue }),
+    changeFavoriteFilter: (favoriteFilter: boolean) => patchState(store, { favoriteFilter }),
     changeFavoriteValue: (pokemonId: string) =>
       patchState(store, {
         pokemons: store

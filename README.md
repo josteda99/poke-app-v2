@@ -3,7 +3,7 @@ intertview check
 * create welcome✅
 * create list✅
 * get detail (by route)✅
-* get all pokemons with fav
+* get all pokemons with fav✅
 * implement signal state✅
 * implement search pokemon✅
 * styles

@@ -1,15 +1,24 @@
 <div class="p-5">
   <h2 class="text-center">PokeApp v2</h2>
 
-  <input
-    class="my-2 border border-black w-full"
-    type="search"
-    name="search"
-    id="search_inp"
-    placeholder="search pokemon"
-    [ngModel]="searchInputValue()"
-    (input)="changeSearchValue($event)"
-  />
+  <div class="flex gap-5">
+    <input
+      class="my-2 border border-black w-full"
+      type="search"
+      name="search"
+      id="search_inp"
+      placeholder="search pokemon"
+      [ngModel]="searchInputValue()"
+      (input)="changeSearchValue($event)"
+    />
+    <input
+      type="checkbox"
+      name="favorite_filter"
+      id="favorite_filter_chb"
+      [ngModel]="favoriteFilter()"
+      (change)="changeFavoriteFilter($event)"
+    />
+  </div>
 
   <ul>
     @for (pokemon of pokemons(); track pokemon.id) {
@@ -20,10 +29,7 @@
         >
           {{ pokemon.id }} - {{ pokemon.name }}
         </div>
-        <button
-          class="border-2 border-amber-500 p-1"
-          (click)="changeFavoriteValue(pokemon.id, $event)"
-        >
+        <button class="border-2 border-amber-500 p-1" (click)="changeFavoriteValue(pokemon.id)">
           {{ pokemon.favorite }}
         </button>
       </li>
