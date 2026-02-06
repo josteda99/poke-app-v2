@@ -1,13 +1,11 @@
 intertview check
 
-* create welcome
-* create list
-* create detail (by route)
+* create welcome✅
+* create list✅
+* get detail (by route)✅
 * get all pokemons with fav
-* check details
-* implement signal state
-* implement search pokemon
-* implement filter by favorite
+* implement signal state✅
+* implement search pokemon✅
 * styles
 * tests
 * deploy in vercel

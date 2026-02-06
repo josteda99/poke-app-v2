@@ -1,19 +1,31 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { PokemonApiService } from '../services/pokemon.api.service';
-import { AsyncPipe } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { PokemonStore } from '../../store/pokemon.store';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
-  imports: [AsyncPipe],
+  imports: [RouterLink, FormsModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
 })
 export class ListComponent implements OnInit {
-  private pokemonService = inject(PokemonApiService);
+  private _store = inject(PokemonStore);
 
-  public pokemons$ = this.pokemonService.getAllPokemons();
+  public searchInputValue = this._store.searchValue;
+  public pokemons = this._store.filteredPokemons;
 
   ngOnInit() {
-    this.pokemons$.subscribe((a) => console.log(a));
+    this._store.loadPokemons();
+  }
+
+  public changeSearchValue(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this._store.changeSearchValue(input.value ?? '');
+  }
+
+  public changeFavoriteValue(pokemonId: string, event: Event) {
+    event.preventDefault();
+    this._store.changeFavoriteValue(pokemonId);
   }
 }

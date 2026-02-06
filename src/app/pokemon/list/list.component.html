@@ -1,7 +1,32 @@
-<p>list works!</p>
+<div class="p-5">
+  <h2 class="text-center">PokeApp v2</h2>
 
-<ul>
-  @for (pokemon of pokemons$ | async; track pokemon.name) {
-    <li>{{ pokemon.name }} - {{ pokemon.favorite }}</li>
-  }
-</ul>
+  <input
+    class="my-2 border border-black w-full"
+    type="search"
+    name="search"
+    id="search_inp"
+    placeholder="search pokemon"
+    [ngModel]="searchInputValue()"
+    (input)="changeSearchValue($event)"
+  />
+
+  <ul>
+    @for (pokemon of pokemons(); track pokemon.id) {
+      <li class="flex w-full my-3">
+        <div
+          class="m-2 p-1 w-full border-2 border-red-600 flex justify-between"
+          [routerLink]="['/details', pokemon.id]"
+        >
+          {{ pokemon.id }} - {{ pokemon.name }}
+        </div>
+        <button
+          class="border-2 border-amber-500 p-1"
+          (click)="changeFavoriteValue(pokemon.id, $event)"
+        >
+          {{ pokemon.favorite }}
+        </button>
+      </li>
+    }
+  </ul>
+</div>

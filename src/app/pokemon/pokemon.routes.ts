@@ -14,5 +14,9 @@ export const POKEMON_ROUTES: Route[] = [
     path: 'list',
     loadComponent: () => import('./list/list.component').then((c) => c.ListComponent),
   },
+  {
+    path: 'details/:id',
+    loadComponent: () => import('./detail/detail.component').then((c) => c.DetailComponent),
+  },
   { path: '**', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
